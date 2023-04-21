@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.quizapp.QuestionsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradiant_back">
+
+        <TextView
+            android:id="@+id/timer_text_in_detail_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="36sp"
+            android:text="@{viewModel.stringTime}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/button_bookmark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/time"/>
+
+        <ImageButton
+            android:id="@+id/button_bookmark"
+            setImage="@{viewModel.question.bookMarkStatus}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="40dp"
+            android:background="@null"
+            android:contentDescription="@string/bookmark"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:onClick="@{()->viewModel.bookmarkChange()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/baseline_bookmark_add"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:foregroundGravity="center"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="12dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_bookmark">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@{viewModel.question.question}"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    tools:text="@string/question"/>
+
+                <RadioGroup
+                    android:id="@+id/option_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/first_option"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:checked="@{viewModel.question.userAnswer==1?true:false}"
+                        android:text="@{viewModel.question.answerArrayList[0]}"
+                        android:textColor="@color/white"
+                        tools:text="@string/radiobutton"/>
+
+                    <RadioButton
+                        android:id="@+id/second_option"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:checked="@{viewModel.question.userAnswer==2?true:false}"
+                        android:text="@{viewModel.question.answerArrayList[1]}"
+                        android:textColor="@color/white"
+                        tools:text="@string/radiobutton"/>
+
+                    <RadioButton
+                        android:id="@+id/third_option"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:checked="@{viewModel.question.userAnswer==3?true:false}"
+                        android:text="@{viewModel.question.answerArrayList[2]}"
+                        android:textColor="@color/white"
+                        tools:text="@string/radiobutton"/>
+
+                    <RadioButton
+                        android:id="@+id/fourth_option"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:checked="@{viewModel.question.userAnswer==4?true:false}"
+                        android:text="@{viewModel.question.answerArrayList[3]}"
+                        android:textColor="@color/white"
+                        tools:text="@string/radiobutton"/>
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="11dp"
+            android:text="@string/previous_button"
+            android:background="@drawable/button_selector"
+            android:visibility="@{viewModel.hidePrevious ? View.INVISIBLE: View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="22dp"
+            android:text="@string/next_button"
+            android:background="@drawable/button_selector"
+            android:visibility="@{viewModel.hideNext ? View.INVISIBLE: View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_submit_in_detail_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="34dp"
+            android:layout_marginBottom="76dp"
+            android:text="@string/submit_button"
+            android:background="@drawable/button_selector"
+            android:onClick="submitPressed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_next"
+            app:layout_constraintHorizontal_bias="0.269"
+            app:layout_constraintStart_toEndOf="@+id/button_previous" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
